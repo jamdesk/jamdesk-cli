@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://www.jamdesk.com/docs
+    about: Check the docs for guides, config reference, and troubleshooting
+  - name: Contact Support
+    url: https://www.jamdesk.com/docs/help/support/contact
+    about: Get help from the Jamdesk team

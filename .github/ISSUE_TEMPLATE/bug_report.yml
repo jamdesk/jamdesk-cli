@@ -1,0 +1,71 @@
+name: Bug Report
+description: Report a bug with the Jamdesk CLI
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the sections below so we can reproduce and fix it.
+
+  - type: input
+    id: version
+    attributes:
+      label: CLI Version
+      description: Run `jamdesk --version` and paste the output
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      description: Run `node -v` and paste the output
+      placeholder: "v20.11.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - macOS
+        - Linux
+        - Windows
+    validations:
+      required: true
+
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      description: Which command triggered the bug?
+      placeholder: "jamdesk dev"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the issue
+      value: |
+        1.
+        2.
+        3.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Error Output
+      description: Paste any error output. Run with `--verbose` for more detail.
+      render: shell
