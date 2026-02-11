@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/jamdesk)](https://www.npmjs.com/package/jamdesk)
 [![Node.js](https://img.shields.io/node/v/jamdesk)](https://nodejs.org)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
 
 CLI for [Jamdesk](https://www.jamdesk.com) — build, preview, and deploy documentation sites from MDX.
 
@@ -320,4 +320,4 @@ See the [docs.json reference](https://www.jamdesk.com/docs/config/docs-json-refe
 
 ## License
 
-MIT
+Apache 2.0
