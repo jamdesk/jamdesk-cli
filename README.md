@@ -28,7 +28,7 @@ cd my-docs
 jamdesk dev
 ```
 
-Your docs are at **http://localhost:3000/docs**. That's it.
+Your docs are at **http://localhost:3000**. That's it.
 
 ## Installation
 
