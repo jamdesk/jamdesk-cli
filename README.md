@@ -15,10 +15,10 @@ Jamdesk is a docs-as-code platform. Connect a GitHub repo, write in MDX, and you
 - **Dev server** — Turbopack-powered with hot reload on every save
 - **50+ MDX components** — accordions, tabs, code groups, callouts, [and more](https://www.jamdesk.com/docs/components/overview)
 - **Three themes** — Jam, Nebula, Pulsar. Configured in `docs.json`
-- **OpenAPI** — auto-generate API reference pages from your specs
-- **Full-text search** — works locally and in production, with AI search on hosted sites
-- **Validation** — broken links, MDX syntax errors, config issues. Catch them before deploy
-- **Mintlify migration** — one command to convert your existing docs
+- Auto-generate API reference pages from OpenAPI specs
+- Full-text search works locally and in production (AI search on hosted sites)
+- Catches broken links, MDX syntax errors, and config issues before you deploy
+- Migrate from Mintlify in one command
 
 ## Quick Start
 
@@ -89,12 +89,17 @@ npx jamdesk dev
 | `jamdesk dev --webpack` | Use Webpack instead of Turbopack |
 | `jamdesk dev --clean` | Clear cache before starting |
 | `jamdesk dev --port 3001` | Custom port |
+| `jamdesk login` | Log in to Jamdesk |
+| `jamdesk logout` | Log out |
+| `jamdesk whoami` | Show current user |
+| `jamdesk deploy` | Upload docs and trigger a build |
+| `jamdesk push` | Alias for `jamdesk deploy` |
 | `jamdesk migrate` | Migrate from Mintlify |
 | `jamdesk validate` | Validate docs.json, MDX syntax, OpenAPI specs |
 | `jamdesk openapi-check <spec>` | Validate a single OpenAPI spec |
 | `jamdesk broken-links` | Find broken internal links |
 | `jamdesk rename <from> <to>` | Rename file, update all references |
-| `jamdesk deploy <target>` | Deploy wizard (Cloudflare Worker setup, auth, config) |
+| `jamdesk deploy-proxy cloudflare` | Deploy Cloudflare Worker for subpath hosting |
 | `jamdesk doctor` | Diagnose environment issues |
 | `jamdesk clean` | Clear ~/.jamdesk cache |
 | `jamdesk update` | Update to latest version |
@@ -115,13 +120,38 @@ jamdesk dev --port 3001  # Custom port
 
 The dev server auto-validates on startup, auto-recovers from corrupted Turbopack cache, and auto-increments the port if yours is taken. Full search, all themes, and all components work locally.
 
-Set a default port in `~/.jamdeskrc`:
+Set a default port in [`~/.jamdeskrc`](#cli-defaults).
 
-```json
-{
-  "defaultPort": 3001
-}
+## Authentication
+
+### `jamdesk login`
+
+```bash
+jamdesk login
 ```
+
+Opens your browser to `dashboard.jamdesk.com/cli-auth` for authentication. The CLI starts a local callback server on `127.0.0.1:9876` (falls back to an OS-assigned port if 9876 is busy).
+
+- Supports all dashboard login methods (email/password, Google, GitHub)
+- **Headless/SSH environments**: The URL is always printed to the terminal — copy and open it manually
+- 2-minute timeout; retry if it expires
+- Credentials stored in `~/.jamdeskrc` with `0600` permissions (owner-only read/write)
+
+### `jamdesk logout`
+
+```bash
+jamdesk logout
+```
+
+Clears stored credentials from `~/.jamdeskrc`. No-op if not logged in.
+
+### `jamdesk whoami`
+
+```bash
+jamdesk whoami
+```
+
+Shows the authenticated email address. Validates the session by attempting a token refresh (not just a local cache check). Reports "session expired" if the token can't be refreshed. Run `jamdesk login` again.
 
 ## Validation
 
@@ -199,8 +229,8 @@ Detects your `mint.json`, converts config to `docs.json`, lets you pick a theme,
 
 - **Config** — `mint.json` → `docs.json` (navbar, navigation, footer, SEO, appearance)
 - **Components** — deprecated components like `<CardGroup>` → `<Columns>`
-- **React hooks** — inline components with `useState`/`useEffect` get extracted to `/snippets` as `.tsx` files with `'use client'`
-- **Video embeds** — iframe normalization
+- Inline components with `useState`/`useEffect` get extracted to `/snippets` as `'use client'` `.tsx` files
+- iframe video embeds are normalized
 
 | Option | Description |
 |--------|-------------|
@@ -218,7 +248,56 @@ See the [migration guide](https://www.jamdesk.com/docs/migration) for the full l
 
 ## Deployment
 
-### Jamdesk Hosting
+### CLI Deploy
+
+Deploy directly from the command line:
+
+```bash
+jamdesk login
+jamdesk deploy
+```
+
+Packages your docs, uploads them, and triggers a build. Progress is shown with live status updates as each build phase completes. Also available as `jamdesk push`.
+
+```bash
+jamdesk deploy                 # Upload and build (interactive)
+jamdesk deploy --detach        # Queue and exit immediately
+jamdesk deploy --full-rebuild  # Force full rebuild (no cache)
+jamdesk deploy --project abc   # Deploy to a specific project
+jamdesk push                   # Alias for deploy
+```
+
+**Project resolution**: On first deploy, the CLI prompts you to select a project. The chosen `projectId` is saved to `docs.json` so subsequent deploys skip the prompt. Override with `--project <id>`.
+
+**What gets uploaded**: All project files, respecting `.gitignore`. Always excluded: `.git`, `node_modules`, `.next`, `.env`, `.env.*`, `*.pem`, `*.key`, `credentials.json`, `.gcloud`, `.DS_Store`, `Thumbs.db`.
+
+**Secret file warning**: The CLI warns (but doesn't block) if it detects files that may contain secrets (`.env`, `*.pem`, `*.key`, `credentials.json`, `service_account*.json`, `secret*`). Add them to `.gitignore` to exclude.
+
+**Upload limit**: 100 MB max (compressed).
+
+**Build phases** (displayed during polling):
+1. Extracting files
+2. Validating configuration
+3. Preparing content
+4. Building documentation
+5. Uploading to CDN
+6. Refreshing cache
+
+**Ctrl+C**: Exits polling, but the build continues in the background. A dashboard link is printed for tracking.
+
+**Common errors**:
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| Not logged in | No stored credentials | Run `jamdesk login` |
+| Session expired | Token refresh failed | Run `jamdesk login` again |
+| Access denied | Not a member of the project | Check project membership, or `jamdesk whoami` |
+| Project not found | Invalid `--project` ID or removed project | Check project ID in dashboard |
+| Build in progress | Another build is already running | Wait for it to finish, or check dashboard |
+| Upload too large | Project exceeds 100 MB | Add large files to `.gitignore` |
+| No files to deploy | All files excluded by filters | Check `.gitignore` isn't too aggressive |
+
+### GitHub Auto-Deploy
 
 Push your docs to GitHub and Jamdesk builds and deploys them automatically. Your site gets a `*.jamdesk.app` subdomain with SSL, AI search, analytics, and custom domain support — no infrastructure to manage.
 
@@ -229,7 +308,7 @@ Push your docs to GitHub and Jamdesk builds and deploys them automatically. Your
 Host your docs at a subpath on your existing domain (e.g., `yoursite.com/docs`) using a Cloudflare Worker:
 
 ```bash
-jamdesk deploy cloudflare
+jamdesk deploy-proxy cloudflare
 ```
 
 The wizard handles wrangler setup, Cloudflare auth, zone selection, and worker generation. Supports multiple accounts.
@@ -245,7 +324,7 @@ The wizard handles wrangler setup, Cloudflare auth, zone selection, and worker g
 | `--yes` | Skip prompts (CI mode) |
 
 ```bash
-jamdesk deploy cloudflare --slug acme --domain example.com --path /docs --yes
+jamdesk deploy-proxy cloudflare --slug acme --domain example.com --path /docs --yes
 ```
 
 Generates `index.js`, `wrangler.toml`, `package.json`, and `.gitignore`. Deploy manually with `npx wrangler deploy`.
@@ -310,8 +389,6 @@ See the [docs.json reference](https://www.jamdesk.com/docs/config/docs-json-refe
 - [Deployment](https://www.jamdesk.com/docs/deploy)
 - [Homepage](https://www.jamdesk.com)
 - [Pricing](https://www.jamdesk.com/pricing)
-
-**Example:** [jamdesk.com/docs](https://www.jamdesk.com/docs)
 
 ## Support
 
