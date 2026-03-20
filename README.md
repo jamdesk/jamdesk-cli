@@ -222,7 +222,7 @@ Found 3 misspellings across 24 pages.
 Tip: Run "jamdesk spellcheck --fix" to interactively fix or ignore words.
 ```
 
-Uses an English dictionary with 150+ built-in tech terms (API, GraphQL, Kubernetes, etc.) so common jargon doesn't flag. Add project-specific words to `docs.json`:
+Uses an English dictionary with 150+ built-in tech terms (API, GraphQL, Kubernetes, etc.) so common jargon doesn't flag. Currently English only — multi-language support is planned. Add project-specific words to `docs.json`:
 
 ```json
 {
