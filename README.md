@@ -98,6 +98,8 @@ npx jamdesk dev
 | `jamdesk validate` | Validate docs.json, MDX syntax, OpenAPI specs |
 | `jamdesk openapi-check <spec>` | Validate a single OpenAPI spec |
 | `jamdesk broken-links` | Find broken internal links |
+| `jamdesk spellcheck` | Check for spelling errors |
+| `jamdesk spellcheck --fix` | Interactively fix or ignore misspellings |
 | `jamdesk rename <from> <to>` | Rename file, update all references |
 | `jamdesk deploy-proxy cloudflare` | Deploy Cloudflare Worker for subpath hosting |
 | `jamdesk doctor` | Diagnose environment issues |
@@ -203,6 +205,46 @@ docs/getting-started.mdx:15 - /docs/quikstart
 
 Found 1 broken link in 45 files.
 ```
+
+### `jamdesk spellcheck`
+
+Check your docs for spelling errors:
+
+```bash
+jamdesk spellcheck
+```
+
+```
+getting-started.mdx:14 - "recieve"
+  └─ Did you mean: receive
+
+Found 3 misspellings across 24 pages.
+Tip: Run "jamdesk spellcheck --fix" to interactively fix or ignore words.
+```
+
+Uses an English dictionary with 150+ built-in tech terms (API, GraphQL, Kubernetes, etc.) so common jargon doesn't flag. Add project-specific words to `docs.json`:
+
+```json
+{
+  "spellcheck": {
+    "ignore": ["YourProduct", "kubectl"]
+  }
+}
+```
+
+| Option | Description |
+|--------|-------------|
+| `--fix` | Interactively fix misspellings or add to ignore list |
+| `--json` | Output as JSON (for CI) |
+| `--verbose` | Show each file as it's checked |
+
+**`--fix` mode** steps through each unique misspelled word and lets you choose:
+
+- **Fix →** replace with a suggestion across all files. Up to 3 suggestions shown, best match marked as recommended
+- **Ignore** — add to `spellcheck.ignore` in docs.json so it won't flag again
+- **Skip** — do nothing for this run
+
+Changes are previewed and confirmed before applying. Prose-safe: won't modify words inside code blocks, inline code, or JSX attributes. Your project name from docs.json is automatically ignored.
 
 ## File Management
 
