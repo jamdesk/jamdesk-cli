@@ -1,8 +1,10 @@
 # Jamdesk CLI
 
 [![npm version](https://img.shields.io/npm/v/jamdesk)](https://www.npmjs.com/package/jamdesk)
+[![npm downloads](https://img.shields.io/npm/dm/jamdesk)](https://www.npmjs.com/package/jamdesk)
 [![Node.js](https://img.shields.io/node/v/jamdesk)](https://nodejs.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-skills-blueviolet?logo=anthropic)](https://www.jamdesk.com/docs/claude-code)
 
 CLI for [Jamdesk](https://www.jamdesk.com) — build, preview, and deploy documentation sites from MDX.
 
