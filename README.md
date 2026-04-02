@@ -34,7 +34,7 @@ Your docs are at **http://localhost:3000**. That's it.
 
 ## Installation
 
-### npm (recommended)
+### [npm](https://www.npmjs.com/package/jamdesk) (recommended)
 
 ```bash
 npm install -g jamdesk
@@ -431,6 +431,7 @@ See the [docs.json reference](https://www.jamdesk.com/docs/config/docs-json-refe
 - [Config Reference](https://www.jamdesk.com/docs/config/docs-json-reference)
 - [OpenAPI](https://www.jamdesk.com/docs/api-reference/openapi-setup)
 - [Deployment](https://www.jamdesk.com/docs/deploy)
+- [npm Package](https://www.npmjs.com/package/jamdesk)
 - [Homepage](https://www.jamdesk.com)
 - [Pricing](https://www.jamdesk.com/pricing)
 
