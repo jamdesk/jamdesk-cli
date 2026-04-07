@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://www.jamdesk.com">Website</a> ·
   <a href="https://www.jamdesk.com/docs">Documentation</a> ·
-  <a href="https://www.jamdesk.com/docs/claude-code">Claude Code Plugin</a> ·
+  <a href="https://www.jamdesk.com/docs/claude-code-plugin">Claude Code Plugin</a> ·
   <a href="https://x.com/JamdeskHQ">𝕏 @JamdeskHQ</a>
 </p>
 
