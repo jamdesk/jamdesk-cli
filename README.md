@@ -1,14 +1,28 @@
-# Jamdesk CLI
+<p align="center">
+  <a href="https://www.jamdesk.com">
+    <img src="https://www.jamdesk.com/logo-light.png" width="280" alt="Jamdesk" />
+  </a>
+</p>
 
-[![npm version](https://img.shields.io/npm/v/jamdesk)](https://www.npmjs.com/package/jamdesk)
-[![npm downloads](https://img.shields.io/npm/dm/jamdesk)](https://www.npmjs.com/package/jamdesk)
-[![Node.js](https://img.shields.io/node/v/jamdesk)](https://nodejs.org)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-skills-blueviolet?logo=anthropic)](https://www.jamdesk.com/docs/claude-code)
+<p align="center">
+  <a href="https://www.npmjs.com/package/jamdesk"><img src="https://img.shields.io/npm/v/jamdesk" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/jamdesk"><img src="https://img.shields.io/npm/dm/jamdesk" alt="npm downloads" /></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/jamdesk" alt="Node.js" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License" /></a>
+</p>
+
+<p align="center">
+  <a href="https://www.jamdesk.com">Website</a> ·
+  <a href="https://www.jamdesk.com/docs">Documentation</a> ·
+  <a href="https://www.jamdesk.com/docs/claude-code">Claude Code Plugin</a> ·
+  <a href="https://x.com/JamdeskHQ">𝕏 @JamdeskHQ</a>
+</p>
+
+# Jamdesk CLI
 
 CLI for [Jamdesk](https://www.jamdesk.com) — build, preview, and deploy documentation sites from MDX.
 
-![Jamdesk documentation site showing dark mode with sidebar navigation and API reference](https://www.jamdesk.com/cli-screenshot.jpg)
+![Jamdesk documentation site showing dark mode with sidebar navigation and video embed](https://www.jamdesk.com/cli-screenshot.jpg)
 
 ## What is Jamdesk?
 
