@@ -22,7 +22,7 @@
 
 CLI for [Jamdesk](https://www.jamdesk.com) — build, preview, and deploy documentation sites from MDX.
 
-![Jamdesk documentation site showing dark mode with sidebar navigation and video embed](https://www.jamdesk.com/cli-screenshot.jpg)
+![Jamdesk documentation site showing dark mode with sidebar navigation and video embed](https://www.jamdesk.com/jamdesk-docs-dark.jpg)
 
 ## What is Jamdesk?
 
