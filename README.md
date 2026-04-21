@@ -435,6 +435,7 @@ See the [docs.json reference](https://www.jamdesk.com/docs/config/docs-json-refe
 
 - Node.js v20.0.0+
 - npm v8+ (recommended)
+- macOS, Linux, or Windows (all tested in CI)
 
 ## Learn More
 
@@ -446,6 +447,7 @@ See the [docs.json reference](https://www.jamdesk.com/docs/config/docs-json-refe
 - [OpenAPI](https://www.jamdesk.com/docs/api-reference/openapi-setup)
 - [Deployment](https://www.jamdesk.com/docs/deploy)
 - [npm Package](https://www.npmjs.com/package/jamdesk)
+- [Release History](https://www.npmjs.com/package/jamdesk?activeTab=versions)
 - [Homepage](https://www.jamdesk.com)
 - [Pricing](https://www.jamdesk.com/pricing)
 
