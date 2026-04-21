@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://www.jamdesk.com">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://www.jamdesk.com/logo-dark-2048.png" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://www.jamdesk.com/logo-dark-wordmark.png" />
       <img src="https://www.jamdesk.com/logo-light.png" width="280" alt="Jamdesk" />
     </picture>
   </a>
